@@ -49,7 +49,8 @@ const Contributors = () => {
         localStorage.getItem("user_details")
       );
       const user_id = await user_details.id;
-      const body = { user_id, email, amount };
+      const initial_balance = await user_details.balance;
+      const body = { user_id, email, amount, initial_balance };
       // console.log(body);
       const response = await fetch("http://localhost:5000/contribute/amount", {
         method: "POST",
@@ -60,7 +61,9 @@ const Contributors = () => {
       });
 
       if (response.status === 200) {
-        console.log(response.json());
+        // console.log(response.json());
+        user_details.balance = parseFloat(initial_balance) - parseFloat(amount);
+        localStorage.setItem("user_details", JSON.stringify(user_details));
         window.alert("Amount send!");
       }
 

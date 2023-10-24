@@ -10,7 +10,7 @@ const pool = new Pool({
   port: 5432, // Default PostgreSQL port
 });
 
-//---------------Creating a controller to all groups of the person--------------------
+//---------------Creating a controller to all groups of the person--------------------//
 export const allGroups = async (req, res) => {
   try {
     const userID = await req.body.user_id;
@@ -44,7 +44,8 @@ export const allGroups = async (req, res) => {
 };
 
 export const splitFunction = async (req, res) => {
-  const data = req.body.updatedBalances;
+  const user_id = await req.body.user_id;
+  const data = await req.body.updatedBalances;
   try {
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
@@ -66,9 +67,15 @@ export const splitFunction = async (req, res) => {
       }
     }
 
+    const findBalanceQuery = "SELECT * FROM account WHERE user_id = $1";
+    const findBalanceResult = await pool.query(findBalanceQuery, [user_id]);
+
+    const balance_to_send = await findBalanceResult.rows[0].user_balance;
+
     res.status(200).json({
       success: true,
       message: "Successfully split the amount!",
+      newBalance: await balance_to_send,
     });
   } catch (error) {
     console.error(error);
@@ -79,7 +86,7 @@ export const splitFunction = async (req, res) => {
   }
 };
 
-//-------Controller for getting the members of a particular group-----------------
+//-------Controller for getting the members of a particular group------------//
 export const memberInAGroup = async (req, res) => {
   try {
     const groupID = await req.body.group_id;
@@ -118,7 +125,7 @@ export const memberInAGroup = async (req, res) => {
 export const amountPaidByAUserInAGroup = async (req, res) => {
   try {
     const groupID = await req.body.group_id;
-    const paymentDetails = [...(await req.body.details)];
+    const paymentDetails = [...(await req.body.updatedBalances)];
 
     const getAllMembersQuery = `SELECT * FROM "group" WHERE group_id = $1;`;
     const insertAmountQuery = `UPDATE "group" SET pool_amount = $1 WHERE group_id = $2 AND user_id = $3;`;
@@ -192,7 +199,7 @@ export const changeRemainingBalanceAndStatus = async (req, res) => {
     const averageValue = await req.body.average;
     const groupID = await req.body.group_id;
     const userID = await req.body.user_id;
-    const enterBalance = await req.body.balance_amount;
+    // const enterBalance = await req.body.balance_amount;
     const checkBalanceQuery = `SELECT * FROM "group" WHERE user_id = $1 AND group_id = $2;`;
     const setStatusQuery = `UPDATE TABLE "group" SET status = $1 WHERE user_id = $2 AND group_id = $3;`;
     const checkBalanceResult = await pool.query(checkBalanceQuery, [
@@ -292,7 +299,7 @@ export const createGroup = async (req, res) => {
   }
 };
 
-//------Adding a member into already existing group--------
+//------Adding a member into already existing group--------//
 export const addMemberGroup = async (req, res) => {
   const email = await req.body.email;
   const group_id = await req.body.group_id;

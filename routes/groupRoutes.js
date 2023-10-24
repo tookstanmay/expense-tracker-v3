@@ -4,6 +4,9 @@ import express from "express";
 import {
   addMemberGroup,
   allGroups,
+  amountPaidByAUserInAGroup,
+  averageOfTheGroup,
+  changeRemainingBalanceAndStatus,
   createGroup,
   memberInAGroup,
   splitFunction,

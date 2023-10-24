@@ -26,7 +26,7 @@ const ExpenseItem = ({ expense, showBudget }) => {
     <>
       <td>{expense.expense_name}</td>
       <td>{formatCurrency(parseFloat(expense.expense_amount))}</td>
-      <td>{formatDateToLocaleString(expense.expense_created_at)}</td>
+      <td>{formatDateToLocaleString(parseInt(expense.expense_created_at))}</td>
       {showBudget && budget && (
         <td>
           {

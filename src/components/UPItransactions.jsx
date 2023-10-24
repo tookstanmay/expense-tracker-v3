@@ -6,6 +6,9 @@ const UPItransactions = () => {
   const [email, setEmail] = useState("");
   const [sms, setSms] = useState([]);
   const [date, setDate] = useState("");
+  const [credited, setCredited] = useState(0);
+  const [debited, setDebited] = useState(0);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     const firebaseConfig = {
@@ -40,12 +43,38 @@ const UPItransactions = () => {
           });
           setSms(smsData);
         });
+
+        if (sms.length > 0 && done === false) {
+          let creditedTotal = 0;
+          let debitedTotal = 0;
+
+          // Iterate through the SMS messages
+          sms.forEach((message, index) => {
+            // Check if message[0] is a number and message[2] is 'Credited' or 'Debited'
+            if (
+              !isNaN(message[0]) &&
+              (message[2] === "Credited" || message[2] === "Debited")
+            ) {
+              // Add the value to the appropriate total based on 'Credited' or 'Debited'
+              if (message[2] === "Credited") {
+                creditedTotal += message[0] / 80;
+              } else {
+                debitedTotal += message[0] / 80;
+              }
+            }
+          });
+
+          setCredited(creditedTotal.toFixed(2));
+          setDebited(debitedTotal.toFixed(2));
+
+          setDone(true);
+        }
       };
       firebaseSetup();
     }
 
     fetchUserData();
-  }, [email]);
+  }, [email, sms]);
 
   const dateCalculator = (message) => {
     const epochT = parseInt(message[1]);
@@ -76,7 +105,7 @@ const UPItransactions = () => {
               (message, index) =>
                 message[0] && (
                   <tr key={index}>
-                    <td>{message[0]}</td>
+                    <td>{message[0] / 80}</td>
                     <td>{dateCalculator(message)}</td>
                     <td>{message[2]}</td>
                     <td>UPI Transactions</td>
@@ -85,6 +114,20 @@ const UPItransactions = () => {
             )}
           </tbody>
         </table>
+      </div>
+      <div style={{ marginTop: "40px" }}>
+        <div>
+          <span>
+            <b>Credited: </b>
+          </span>
+          <span>{credited}</span>
+        </div>
+        <div>
+          <span>
+            <b>Debited: </b>
+          </span>
+          <span>{debited}</span>
+        </div>
       </div>
     </>
   );

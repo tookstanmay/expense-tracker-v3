@@ -29,6 +29,7 @@ import Contributors from "./components/Contributors";
 import ShowAllGroups from "./components/ShowAllGroups";
 import UPItransactions from "./components/UPItransactions";
 import GroupState from "../context/groups/GroupState";
+import PieChart from "./components/PieChart";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,11 @@ const router = createBrowserRouter([
       {
         path: "upitransactions",
         element: <UPItransactions />,
+        errorElement: <Error />,
+      },
+      {
+        path: "datachart",
+        element: <PieChart />,
         errorElement: <Error />,
       },
       {

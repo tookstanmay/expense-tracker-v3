@@ -168,23 +168,12 @@ export const logout = async (req, res) => {
 
     if (categories !== null) {
       for (const category of categories) {
-        let date = parseInt(category.category_created_at);
-        const normalDate = new Date(date);
-        const year = normalDate.getFullYear();
-        const month = normalDate.getMonth() + 1;
-        const day = normalDate.getDate();
-        const formattedDate = `${year}-${month
-          .toString()
-          .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
-
-        // Format as 'YYYY-MM-DD' (PostgreSQL DATE format)
-        const postgresDateFormat = `${year}-${month}-${day}`;
         await pool.query(
           "INSERT INTO category (category_id, category_name, category_created_at, category_limit, category_color, user_id) VALUES ($1, $2, $3, $4, $5, $6)",
           [
             category.category_id,
             category.category_name,
-            postgresDateFormat,
+            category.category_created_at,
             category.category_limit,
             category.category_color,
             user_id,
@@ -195,23 +184,12 @@ export const logout = async (req, res) => {
 
     if (expenses !== null) {
       for (const expense of expenses) {
-        let date = parseInt(expense.expense_created_at);
-        const normalDate = new Date(date);
-        const year = normalDate.getFullYear();
-        const month = normalDate.getMonth() + 1;
-        const day = normalDate.getDate();
-        const formattedDate = `${year}-${month
-          .toString()
-          .padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
-
-        // Format as 'YYYY-MM-DD' (PostgreSQL DATE format)
-        const postgresDateFormat = `${year}-${month}-${day}`;
         await pool.query(
           "INSERT INTO expense (expense_id, expense_name, expense_created_at, expense_amount, category_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)",
           [
             expense.expense_id,
             expense.expense_name,
-            postgresDateFormat,
+            expense.expense_created_at,
             expense.expense_amount,
             expense.category_id,
             user_id,

@@ -40,45 +40,23 @@ export async function budgetAction({ request }) {
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
 
-  if (_action === "deleteExpense") {
+  if (_action === "createExpense") {
     try {
-      deleteExpense({
-        key: "expenses",
-        id: values.expenseId,
-      });
+      let user_details = await JSON.parse(localStorage.getItem("user_details"));
 
-      const user_details = await JSON.parse(
-        localStorage.getItem("user_details")
-      );
+      let initial_balance = await user_details.balance;
+      let newExpenseAmount = await values.newExpenseAmount;
 
-      const balance = await user_details.balance;
-      user_details.balance = balance + parseFloat(values.expenseAmt);
-
-      const updatedDetails = JSON.stringify(user_details);
-      localStorage.setItem("user_details", updatedDetails);
-
-      return toast.success(`Expense deleted!`);
-    } catch (e) {
-      throw new Error("There was a problem deleting your Expense!");
-    }
-  } else if (_action === "createExpense") {
-    try {
-      const user_details = await JSON.parse(
-        localStorage.getItem("user_details")
-      );
-
-      const balance = parseFloat(await user_details.balance);
-      const value_balance = parseFloat(await values.newBudgetAmount);
-
-      if (balance >= value_balance) {
+      if (parseFloat(initial_balance) >= parseFloat(newExpenseAmount)) {
         createExpense({
           expense_name: values.newExpense,
           expense_amount: values.newExpenseAmount,
           category_id: values.newExpenseBudget,
         });
 
-        user_details.balance = balance - value_balance;
-        console.log("Updated Balance:", user_details.balance);
+        user_details.balance =
+          parseFloat(user_details.balance) -
+          parseFloat(values.newExpenseAmount);
 
         const updatedDetails = JSON.stringify(user_details);
         localStorage.setItem("user_details", updatedDetails);
@@ -89,6 +67,26 @@ export async function budgetAction({ request }) {
       }
     } catch (e) {
       throw new Error("There was a problem adding your Expense!");
+    }
+  } else if (_action === "deleteExpense") {
+    try {
+      deleteExpense({
+        key: "expenses",
+        id: values.expenseId,
+      });
+
+      const user_details = await JSON.parse(
+        localStorage.getItem("user_details")
+      );
+      user_details.balance =
+        parseFloat(user_details.balance) + parseFloat(values.expenseAmt);
+
+      const updatedDetails = JSON.stringify(user_details);
+      localStorage.setItem("user_details", updatedDetails);
+
+      return toast.success(`Expense deleted!`);
+    } catch (e) {
+      throw new Error("There was a problem deleting your Expense!");
     }
   }
 }

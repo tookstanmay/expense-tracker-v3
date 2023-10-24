@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../index.css";
 
 // heroicons import
@@ -6,6 +6,7 @@ import {
   TrashIcon,
   BanknotesIcon,
   UserGroupIcon,
+  ChartPieIcon,
 } from "@heroicons/react/24/solid";
 
 // assets
@@ -63,6 +64,19 @@ const Nav = () => {
             width: "auto",
           }}
         >
+          <div style={{ margin: "0 10px" }}>
+            <NavLink
+              to={"datachart"}
+              style={{
+                boxShadow: "none",
+              }}
+            >
+              <button className="btn btn--eleven">
+                <ChartPieIcon width={20} />
+                <span>Data</span>
+              </button>
+            </NavLink>
+          </div>
           <div style={{ margin: "0 10px" }}>
             <NavLink
               to={"upitransactions"}

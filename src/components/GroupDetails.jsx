@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import groupContext from "../../context/groups/groupContext";
 import { ScissorsIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import { fetchData } from "../helper.js";
 
 const GroupDetails = ({ group }) => {
   const context = useContext(groupContext);
@@ -39,7 +40,9 @@ const GroupDetails = ({ group }) => {
     });
 
     // Update user balances in the database
-    const requestBody = { updatedBalances };
+    const user_details = await fetchData("user_details");
+    const user_id = await user_details.id;
+    const requestBody = { user_id, updatedBalances };
     const host = "http://localhost:5000";
     try {
       const response = await fetch(`${host}/api/groups/split`, {
@@ -52,6 +55,12 @@ const GroupDetails = ({ group }) => {
 
       if (response.status === 200) {
         // Split completed successfully, you can update the UI or perform any additional actions here
+        const data = await response.json();
+        const newBalance = await data.newBalance;
+
+        user_details.balance = parseFloat(newBalance);
+        localStorage.setItem("user_details", JSON.stringify(user_details));
+
         window.alert("Splitting done!");
       } else {
         // Handle errors from the server
@@ -97,6 +106,7 @@ const GroupDetails = ({ group }) => {
                 id={`${member.user_id}splitAmount`}
                 style={{ width: "250px" }}
                 value={splitAmounts[member.user_id] || ""}
+                placeholder="Amount."
                 onChange={(e) => {
                   setSplitAmounts({
                     ...splitAmounts,

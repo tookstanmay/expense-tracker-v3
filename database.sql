@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS account (
 CREATE TABLE IF NOT EXISTS category (
    category_id VARCHAR(100) PRIMARY KEY,
    category_name VARCHAR(100),
-   category_created_at VARCHAR(100),
+   category_created_at VARCHAR(255),
    category_limit NUMERIC(7,2),
    category_color VARCHAR(50),
    user_id INT,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS category (
  CREATE TABLE IF NOT EXISTS expense (
    expense_id VARCHAR(100) PRIMARY KEY,
    expense_name VARCHAR(100) NOT NULL,
-   expense_created_at VARCHAR(100),
+   expense_created_at VARCHAR(255),
    expense_amount NUMERIC(7,2) NOT NULL,
    category_id VARCHAR(100),
    user_id INT,
@@ -53,3 +53,13 @@ CREATE TABLE IF NOT EXISTS "group"(
   FOREIGN KEY (user_id) REFERENCES account(user_id),
   PRIMARY KEY(group_id,user_id)
 );
+
+CREATE TABLE IF NOT EXISTS user_payments (
+  payment_id SERIAL PRIMARY KEY,
+  user_id INT,
+  group_id VARCHAR(100),
+  amount NUMERIC(10, 2),
+  FOREIGN KEY (user_id) REFERENCES account(user_id),
+  FOREIGN KEY (group_id, user_id) REFERENCES "group"(group_id, user_id)
+);
+

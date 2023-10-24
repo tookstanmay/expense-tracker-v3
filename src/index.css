@@ -270,8 +270,32 @@ p {
   --color: hsl(var(--bkg));
 }
 
+:where(.btn--eleven) {
+  --backdrop: hsl(190, 100%, 90%);
+  border: 2px solid hsl(190, 88%, 36%);
+  --color: hsl(190, 88%, 36%);
+}
+
+:where(.btn--eleven):is(:hover, :focus-visible) {
+  --backdrop: hsl(190, 88%, 36%);
+  --color: hsl(var(--bkg));
+}
+
 .btn[disabled] {
   opacity: 0.5;
+}
+
+/* animation for spent >= category_limit */
+@keyframes blink-gray {
+  0% {
+    background-color: hsl(0, 100%, 100%); /* Gray color */
+  }
+  50% {
+    background-color: hsl(26, 100%, 85%); /* Lighter gray color */
+  }
+  100% {
+    background-color: hsl(0, 100%, 100%); /* Back to gray */
+  }
 }
 
 /* utility layouts */

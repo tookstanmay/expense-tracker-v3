@@ -17,10 +17,16 @@ import { BanknotesIcon, TrashIcon } from "@heroicons/react/24/outline";
 const BudgetItem = ({ budget, showDelete = false }) => {
   const { category_id, category_name, category_limit, category_color } = budget;
   const spent = calculateSpentByBudget(category_id);
-  // console.log(spent);
 
   return (
-    <div className="budget" style={{ "--accent": category_color }}>
+    <div
+      className="budget"
+      style={{
+        "--accent": spent > category_limit ? "0, 100%, 40%" : category_color,
+        animation:
+          spent > category_limit ? "blink-gray 2s linear infinite" : "none",
+      }}
+    >
       <div className="progress-text">
         <h3>{category_name}</h3>
         <p>{formatCurrency(category_limit)} Budgeted</p>
@@ -48,7 +54,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
             }}
           >
             <button className="btn">
-              <span>Delete Budget</span>
+              <span>Delete Category</span>
               <TrashIcon width={20} />
             </button>
           </Form>
