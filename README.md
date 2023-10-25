@@ -79,6 +79,6 @@ We'd like to thank all the contributors of our project:
   Also We'd like to thank Chris Pennington ([Coding in Public](https://github.com/coding-in-public)) for the inspiration of this theme. Hey Chris! we took this forward from localStorage to SQL with additional features! 🥳🥳
 
 ## Some Screenshots
-![Group Modal](screenshots/Group_Modal.png)
-![Data Doughnut](screenshots/Data.png)
-![PDF Report](screenshots/PDF.png)
+<img src="screenshots/Group_Modal.png" height="200px"> <hr>
+<img src="screenshots/Data.png" height="200px"> <hr>
+<img src="screenshots/PDF.png" height="200px"> <hr>
