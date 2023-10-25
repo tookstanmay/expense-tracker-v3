@@ -79,6 +79,6 @@ We'd like to thank all the contributors of our project:
   Also We'd like to thank Chris Pennington ([Coding in Public](https://github.com/coding-in-public)) for the inspiration of this theme. Hey Chris! we took this forward from localStorage to SQL with additional features! 🥳🥳
 
 ## Some Screenshots
-![Group Modal](https://github.com/tookstanmay/expense-tracker-v3/blob/master/screenshots/Group_Modal.png)
-![Data Doughnut](https://github.com/tookstanmay/expense-tracker-v3/blob/master/screenshots/Data.png)
-![PDF Report](https://github.com/tookstanmay/expense-tracker-v3/blob/master/screenshots/PDF.png)
+![Group Modal](screenshots/Group_Modal.png)
+![Data Doughnut](screenshots/Data.png)
+![PDF Report](screenshots/PDF.png)
