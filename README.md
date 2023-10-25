@@ -74,7 +74,7 @@ We'd like to thank all the contributors of our project:
 - [Vishesh Chouhan](https://github.com/VisheshChouhan)
 - [Ruchi Jamre](https://github.com/Ruchi12390)
 - [Ansh Jain](https://github.com/AnshJain2033)
-- [Tanmay Sharma](https://github.com/tookstanmay) (host)
+- [Tanmay Sharma](https://github.com/tookstanmay)
 
   Also We'd like to thank Chris Pennington ([Coding in Public](https://github.com/coding-in-public)) for the inspiration of this theme. Hey Chris! we took this forward from localStorage to SQL with additional features! 🥳🥳
 
