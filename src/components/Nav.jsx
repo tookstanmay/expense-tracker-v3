@@ -17,6 +17,7 @@ import {
   BanknotesIcon,
   UserGroupIcon,
   ChartPieIcon,
+  PresentationChartLineIcon,
 } from "@heroicons/react/24/solid";
 
 // assets
@@ -58,18 +59,36 @@ const generatePDF = (data) => {
   const imgData = budgetBookLogo;
   pdf.addImage(imgData, 10, 10, 60, 13);
 
-  pdf.setFontSize(12);
-  pdf.text(`Name: ${user_name}`, 10, 35);
-  pdf.text(`Email: ${email}`, 10, 43);
-  pdf.text(`Balance Left: $ ${user_balance}`, 10, 51);
-
   //   Add the table using autoTable
+  const key_value = ["Key", "Value"];
+  const infoData = [
+    ["Name", `${user_name}`],
+    ["Email", `${email}`],
+    ["Balance remaining: ", `${user_balance} (USD)`],
+  ];
+
   pdf.autoTable({
-    startY: 65,
+    startY: 35,
+    head: [key_value],
+    body: infoData,
+    headStyles: {
+      fillColor: [100, 100, 100],
+    },
+    styles: {
+      fontSize: 11,
+    },
+  });
+
+  pdf.setFontSize(13);
+  pdf.text("Expense Analysis Report: ", 15, 85);
+  pdf.autoTable({
+    startY: 90,
     head: [columns],
     body: tableData,
   });
 
+  // adding doughnut chart and copyright on new page
+  pdf.addPage();
   // Calculate the page height
   const pageHeight = pdf.internal.pageSize.getHeight();
 
@@ -80,13 +99,13 @@ const generatePDF = (data) => {
   const copyrightY = pageHeight - yOffsetFromBottom;
 
   // add the pie chart
-  const pieChartYOffset = pageHeight - 120 - 50;
+  const pieChartYOffset = pageHeight - 120 - 90;
   const chartData = ChartImage;
-  pdf.addImage(chartData, 40, pieChartYOffset, 120, 120);
+  pdf.addImage(chartData, 40, pieChartYOffset, 130, 130);
 
   // Add the copyright text
   pdf.setFontSize(10);
-  pdf.text(`BudgetBook copyrighted 2023`, 10, copyrightY);
+  pdf.text(`© BudgetBook 2023`, 90, copyrightY);
 
   pdf.save("BudgetBook_report.pdf");
 };
@@ -151,12 +170,12 @@ const Nav = () => {
             width: "auto",
           }}
         >
-          <div style={{ margin: "0 10px" }}>
+          <div style={{ margin: "0 19px 0 0" }}>
             <button
               className="btn btn--mandarin"
               onClick={() => generatePDF(expense)}
             >
-              <ChartPieIcon width={20} />
+              <PresentationChartLineIcon width={20} />
               <span style={{ fontWeight: "bold" }}>PDF Report</span>
             </button>
           </div>
