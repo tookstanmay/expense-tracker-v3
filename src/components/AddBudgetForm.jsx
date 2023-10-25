@@ -22,10 +22,10 @@ const AddBudgetForm = () => {
 
   return (
     <div className="form-wrapper">
-      <h2 className="h3">Create Budget</h2>
+      <h2 className="h3">Create Category</h2>
       <fetcher.Form method="post" className="grid-sm" ref={formRef}>
         <div className="grid-xs">
-          <label htmlFor="newBudget">Budget Name</label>
+          <label htmlFor="newBudget">Category Name</label>
           <input
             type="text"
             name="newBudget"
@@ -52,10 +52,10 @@ const AddBudgetForm = () => {
         <input type="hidden" name="_action" value={"createBudget"} />
         <button className="btn btn--dark" type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
-            <span>Creating budget...</span>
+            <span>Creating Category...</span>
           ) : (
             <>
-              <span>Create budget</span>
+              <span>Create Category</span>
               <CurrencyDollarIcon width={20} />
             </>
           )}

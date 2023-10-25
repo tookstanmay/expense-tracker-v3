@@ -66,6 +66,7 @@ export const loginController = async (req, res) => {
     res.status(200).json({
       user_id: rows[0].user_id,
       balance: rows[0].user_balance,
+      user_name: rows[0].user_name,
       message: "Login successful",
     });
   } catch (error) {
@@ -135,6 +136,38 @@ export const userDetails = async (req, res) => {
   } catch (error) {
     console.error("Error fetching user data:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const setZeroBalance = async (req, res) => {
+  const user_email = await req.body.email;
+  const zeroBalance = await req.body.zeroBalance;
+
+  try {
+    const fetchBalanceQuery = "SELECT * FROM account WHERE user_email = $1";
+    const fetchBalanceResult = await pool.query(fetchBalanceQuery, [
+      user_email,
+    ]);
+
+    const initialBalance = parseFloat(
+      await fetchBalanceResult.rows[0].user_balance
+    );
+
+    const newBalance = parseFloat(zeroBalance) + parseFloat(initialBalance);
+
+    const updateBalanceQuery =
+      "UPDATE account SET user_balance = $1 WHERE user_email = $2";
+    const updateBalanceResult = await pool.query(updateBalanceQuery, [
+      newBalance,
+      user_email,
+    ]);
+
+    res.status(200).json({
+      message: "Successfully updated User Balance!",
+      zeroBalance: parseFloat(zeroBalance),
+    });
+  } catch (error) {
+    console.error(error);
   }
 };
 

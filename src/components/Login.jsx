@@ -31,10 +31,12 @@ const Login = () => {
         console.log(data);
         const user_id = await data.user_id;
         const balance = parseFloat(await data.balance);
+        const user_name = await data.user_name;
         const user_details = {
           id: user_id,
           email: email,
           balance: balance,
+          user_name: user_name,
         };
 
         localStorage.setItem("user_details", JSON.stringify(user_details));

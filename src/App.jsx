@@ -30,6 +30,7 @@ import ShowAllGroups from "./components/ShowAllGroups";
 import UPItransactions from "./components/UPItransactions";
 import GroupState from "../context/groups/GroupState";
 import PieChart from "./components/PieChart";
+import PDFReport from "./components/PDFReport";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
       {
         path: "datachart",
         element: <PieChart />,
+        errorElement: <Error />,
+      },
+      {
+        path: "pdfreport",
+        element: <PDFReport />,
         errorElement: <Error />,
       },
       {

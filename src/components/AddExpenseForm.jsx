@@ -61,7 +61,7 @@ const AddExpenseForm = ({ budgets }) => {
             />
           </div>
           <div className="grid-xs" hidden={budgets.length === 1}>
-            <label htmlFor="newExpenseBudget">Budget Category</label>
+            <label htmlFor="newExpenseBudget">Select Category</label>
             <select name="newExpenseBudget" id="newExpenseBudget" required>
               {budgets
                 .sort((a, b) => a.category_created_at - b.category_created_at)

@@ -2,6 +2,9 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { calculateSpentByBudget, fetchData } from "../helper";
+import axios from "axios";
+import { CameraIcon } from "@heroicons/react/24/solid";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Function to convert HSL values to CSS-compatible RGB strings
@@ -60,11 +63,41 @@ function hslToRgb(hsl) {
   return `rgb(${r},${g},${b})`;
 }
 
+const captureChart = () => {
+  const chartCanvas = document.getElementById("myDoughnutChart");
+  if (chartCanvas) {
+    const chartImage = chartCanvas.toDataURL("image/png");
+
+    // Send the image data to your server
+    axios
+      .post("http://localhost:5000/save-image", { image: chartImage })
+      .then((response) => {
+        window.alert("Image captured Successfully!");
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the request.
+        console.error(error);
+      });
+  }
+};
+
 const PieChart = () => {
   const completeData = fetchData("budgets");
   const user_details = fetchData("user_details");
   const remainingBalance = user_details.balance;
-  const options = {};
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        position: "left",
+        labels: {
+          font: {
+            size: 16, // You can adjust the font size here
+          },
+        },
+      },
+    },
+  };
   const categoryNames = completeData.map((category) => category.category_name);
   categoryNames.push("Balance Left");
   const myDATA = completeData.map((category) =>
@@ -76,7 +109,7 @@ const PieChart = () => {
   const backgroundColor = completeData.map((category) =>
     hslToRgb(category.category_color)
   );
-  backgroundColor.push("RGB(135, 152, 163)");
+  backgroundColor.push("#8ECDDD");
 
   const data = {
     labels: categoryNames,
@@ -89,12 +122,38 @@ const PieChart = () => {
   };
 
   return (
-    <>
-      <div>Data Representation</div>
-      <div style={{ padding: "20px", width: "50%" }}>
-        <Doughnut data={data} options={options}></Doughnut>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ alignSelf: "flex-start" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <b>Category Wise Analysis</b>
+          <button
+            className={"btn btn--dark"}
+            style={{ margin: "0 20px" }}
+            onClick={captureChart}
+          >
+            <CameraIcon width={20} />
+            Capture Chart
+          </button>
+        </div>
       </div>
-    </>
+      <div style={{ width: "45%" }}>
+        <Doughnut data={data} options={options} id="myDoughnutChart"></Doughnut>
+      </div>
+    </div>
   );
 };
 

@@ -42,6 +42,7 @@ svg {
   --primary: 210 50% 50%;
   --eight: 34, 86.6%, 48.6%;
   --two: 1, 59%, 61%;
+  --mandarin: 32, 94%, 50%;
 
   --one: #1B262C;
   --three: #0F4C75;
@@ -234,6 +235,17 @@ p {
 
 :where(.btn--primary):is(:hover, :focus-visible) {
   --backdrop: hsl(var(--primary));
+  --color: hsl(var(--bkg));
+}
+
+:where(.btn--mandarin) {
+  --backdrop: hsl(var(--mandarin) / 0.1);
+  border: 2px solid hsl(var(--mandarin));
+  --color: hsl(var(--mandarin));
+}
+
+:where(.btn--mandarin):is(:hover, :focus-visible) {
+  --backdrop: hsl(var(--mandarin));
   --color: hsl(var(--bkg));
 }
 
