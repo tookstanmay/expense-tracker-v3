@@ -76,7 +76,6 @@ We'd like to thank all the contributors of our project:
 - [Ansh Jain](https://github.com/AnshJain2033)
 - [Tanmay Sharma](https://github.com/tookstanmay)
 
-  Also We'd like to thank Chris Pennington ([Coding in Public](https://github.com/coding-in-public)) for the inspiration of this theme. Hey Chris! we took this forward from localStorage to SQL with additional features! 🥳🥳
 
 ## Some Screenshots
 <img src="screenshots/Group_Modal.png" height="200px"> <hr>
