@@ -18,7 +18,7 @@ import {
   contributeAmount,
   contributor,
 } from "./controllers/ContributeController.js";
-
+import {smsEntryController} from "./controllers/smsController.js"
 const app = express();
 const port = 5000;
 
@@ -53,7 +53,7 @@ app.post("/contribute/email", contributor);
 app.post("/contribute/amount", contributeAmount);
 
 app.post("/fetchBudgets", fetchBudgets);
-app.post("/smsEntry",)
+app.post("/smsEntry",smsEntryController);
 // group routes
 app.use("/api/groups", groupRoutes);
 
