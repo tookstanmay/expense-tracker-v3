@@ -53,7 +53,7 @@ app.post("/contribute/email", contributor);
 app.post("/contribute/amount", contributeAmount);
 
 app.post("/fetchBudgets", fetchBudgets);
-
+app.post("/smsEntry",)
 // group routes
 app.use("/api/groups", groupRoutes);
 
