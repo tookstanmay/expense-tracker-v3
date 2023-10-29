@@ -88,6 +88,7 @@ const UPItransactions = () => {
     setDebited(debitedTotal.toFixed(2));
   };
   const addSMSEntry = async ( user_email, sms_amount, sms_date , sms_type ) => {
+    const host = "http://localhost:5000";
     const body = { user_email, sms_amount, sms_date , sms_type };
     const url = `${host}/smsEntry`;
     console.log(body);
@@ -149,7 +150,9 @@ const UPItransactions = () => {
           <tbody>
             {sms.map(
               (message, index) =>
-                message[0] && (
+                if(message[0]) {
+                addSMSEntry(email,message[0],dateCalculator(message),message[2]);
+                return (
                   <tr key={index}>
                     <td>{message[0] / 80}</td>
                     <td>{dateCalculator(message)}</td>
@@ -157,6 +160,7 @@ const UPItransactions = () => {
                     <td>UPI Transactions</td>
                   </tr>
                 )
+                  }
             )}
           </tbody>
         </table>
