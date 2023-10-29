@@ -89,7 +89,7 @@ const UPItransactions = () => {
   };
   const addSMSEntry = async ( user_email, sms_amount, sms_date , sms_type ) => {
     const body = { user_email, sms_amount, sms_date , sms_type };
-    const url = `${host}/api/addmembers`;
+    const url = `${host}/smsEntry`;
     console.log(body);
     const response = await fetch(url, {
       method: "POST",
