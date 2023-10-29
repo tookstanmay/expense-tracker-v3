@@ -63,3 +63,9 @@ CREATE TABLE IF NOT EXISTS user_payments (
   FOREIGN KEY (group_id, user_id) REFERENCES "group"(group_id, user_id)
 );
 
+CREATE TABLE IF NOT EXISTS sms(
+TEXT user_email PRIMARY KEY,
+INT sms_amount,
+DATE sms_date,
+TEXT sms_type
+);
