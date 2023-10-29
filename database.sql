@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS user_payments (
 );
 
 CREATE TABLE IF NOT EXISTS sms(
-TEXT user_email PRIMARY KEY,
-INT sms_amount,
-DATE sms_date,
-TEXT sms_type
+user_email TEXT PRIMARY KEY,
+sms_amount INT,
+sms_date DATE,
+sms_type TEXT
 );
