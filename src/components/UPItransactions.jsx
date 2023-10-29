@@ -87,9 +87,9 @@ const UPItransactions = () => {
     setCredited(creditedTotal.toFixed(2));
     setDebited(debitedTotal.toFixed(2));
   };
-  const addSMSEntry = async (group_id, email, group_name) => {
+  const addSMSEntry = async ( user_email, sms_amount, sms_date , sms_type ) => {
     const body = { user_email, sms_amount, sms_date , sms_type };
-    const url = `${host}/api/groups/addmembers`;
+    const url = `${host}/api/addmembers`;
     console.log(body);
     const response = await fetch(url, {
       method: "POST",
